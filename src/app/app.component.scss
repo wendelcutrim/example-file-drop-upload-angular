@@ -1,0 +1,75 @@
+$blue: #106eb0;
+$grey: #d6d0cc;
+$border-radius: 10px;
+
+::ng-deep {
+    button {
+        cursor: pointer;
+    }
+
+    .msg-drop {
+        display: none;
+    }
+
+    .upload-drop-area.fileover {
+        border-color: $blue;
+        padding: 30px;
+
+        .msg {
+            &-drop {
+                display: inline;
+            }
+            &-drag {
+                display: none;
+            }
+        }
+    }
+
+    .upload-drop-area {
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        border: 3px dashed $grey;
+        padding: 20px;
+        border-radius: $border-radius;
+
+        .upload-icon {
+            margin: 20px 0 5 0;
+            cursor: pointer;
+            font-size: 48px;
+            color: $blue;
+        }
+
+        .message-upload {
+            padding: 10px;
+            font-size: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            .link-upload {
+                font-size: inherit;
+                border: none;
+                background: none;
+                color: $blue;
+                font-weight: bold;
+                text-decoration: none;
+            }
+
+            .msg-drag {
+                &.--small {
+                    font-size: 12px;
+                }
+            }
+        }
+
+        .specifications-message {
+            font-size: 10px;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+    }
+}
