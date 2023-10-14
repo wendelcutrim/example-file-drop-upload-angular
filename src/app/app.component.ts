@@ -8,6 +8,7 @@ import {
     SimpleChanges,
     ViewChild,
 } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 export interface ArquivosUpload {
     name: string;
@@ -87,6 +88,7 @@ export class AppComponent implements OnChanges {
                 formatOk = false;
 
                 this.emitFileListError();
+                console.log('emitedFileErrors: ', this.fileErrors);
             } else {
                 formatOk = true;
             }
@@ -102,20 +104,28 @@ export class AppComponent implements OnChanges {
 
                 sizeOk = false;
                 this.emitFileListError();
+                console.log('emitedFileErrors: ', this.fileErrors);
             } else {
                 sizeOk = true;
             }
 
             if (formatOk && sizeOk) {
-                // console.log('verifyFormat: ', verifyFormat);
-                // console.log('verifySize: ', verifyFileSizeMb);
+                this.convertToBase64(files[i]).subscribe({
+                    next: (base64) => {
+                        if (base64 !== null && base64.length) {
+                            this.files.push({
+                                name: files[i].name,
+                                file: files[i],
+                                base64: base64,
+                            });
+                        }
 
-                this.files.push({
-                    name: files[i].name,
-                    file: files[i],
+                        this.emitFileList();
+                        console.log('emitedFiles: ', this.files);
+                    },
+                    error: (err) =>
+                        console.error('[ERROR]: convertToBase64', err),
                 });
-
-                this.emitFileList();
             } else {
                 console.error('seletectedFiles error', {
                     formatOk,
@@ -123,6 +133,22 @@ export class AppComponent implements OnChanges {
                 });
             }
         });
+    }
+
+    convertToBase64(file: File): Observable<string | null> {
+        const reader = new FileReader();
+        const result = new BehaviorSubject<string | null>(null);
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+            const base64Str = reader.result;
+
+            if (base64Str) {
+                result.next(base64Str.toString());
+                result.complete();
+            }
+        };
+
+        return result.asObservable();
     }
 
     verifyFileSizeMb(file: File): boolean {
