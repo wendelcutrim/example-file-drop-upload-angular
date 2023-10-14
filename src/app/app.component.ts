@@ -68,7 +68,7 @@ export class AppComponent implements OnChanges {
         console.log('receveid files: ', files);
         console.log('typeof files: ', typeof files);
 
-        for (let i = 0; i < files.length; i++) {
+        Object.keys(files).forEach((file, i) => {
             let formatOk: boolean = false;
             let sizeOk: boolean = false;
             const verifyFormat = this.verifyFileFormat(files[i]);
@@ -107,8 +107,8 @@ export class AppComponent implements OnChanges {
             }
 
             if (formatOk && sizeOk) {
-                console.log('verifyFormat: ', verifyFormat);
-                console.log('verifySize: ', verifyFileSizeMb);
+                // console.log('verifyFormat: ', verifyFormat);
+                // console.log('verifySize: ', verifyFileSizeMb);
 
                 this.files.push({
                     name: files[i].name,
@@ -122,7 +122,7 @@ export class AppComponent implements OnChanges {
                     sizeOk,
                 });
             }
-        }
+        });
     }
 
     verifyFileSizeMb(file: File): boolean {
