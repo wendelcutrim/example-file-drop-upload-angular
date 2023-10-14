@@ -57,6 +57,13 @@ export class AppComponent implements OnChanges {
         this.inputFile.nativeElement.click();
     }
 
+    onChangeInputFile(event: Event) {
+        const target = event.target as HTMLInputElement;
+        const files = target.files;
+
+        files && this.selectedFiles(files);
+    }
+
     selectedFiles(files: FileList) {
         console.log('receveid files: ', files);
         console.log('typeof files: ', typeof files);

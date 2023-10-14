@@ -38,6 +38,16 @@ $border-radius: 10px;
             cursor: pointer;
             font-size: 48px;
             color: $blue;
+
+            button {
+                background: none;
+                border: none;
+                color: inherit;
+
+                span {
+                    font-size: 32px;
+                }
+            }
         }
 
         .message-upload {

@@ -10,7 +10,7 @@ import {
     selector: '[appDrop]',
 })
 export class DropDirective {
-    @Output() fileDropped = new EventEmitter();
+    @Output() fileDropped = new EventEmitter<FileList>();
 
     @HostBinding('class.fileover') fileOver: boolean = false;
 

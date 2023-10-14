@@ -1,27 +1,34 @@
-<div (fileDropped)="selectedFiles($event)" appDrop class="upload-drop-area">
-    <div class="upload-icon" (click)="openFileSelector()" aria-hidden="true">
-        <span>upload</span>
-    </div>
-    <div class="message-upload">
-        <p class="msg-drag">
-            arraste e solte o documento aqui ou
-            <button class="link-upload" (click)="openFileSelector()">
-                clique aqui para selecionar arquivos
+<section class="container" [ngStyle]="{ marginTop: '50px', padding: '20px' }">
+    <div (fileDropped)="selectedFiles($event)" appDrop class="upload-drop-area">
+        <div
+            class="upload-icon"
+            (click)="openFileSelector()"
+            aria-hidden="true"
+        >
+            <button tabindex="-1">
+                <span class="material-symbols-outlined"> arrow_circle_up </span>
             </button>
-        </p>
-        <p class="msg-drag --small">
-            O documento deve ter no mãximo {{ maxFileSizeMb }}MB e estar no
-            formato {{ allowedFormatsNames }}
-        </p>
-        <p class="msg-drop">Solte o documento</p>
+        </div>
+        <div class="message-upload">
+            <p class="msg-drag">
+                arraste e solte o documento aqui ou
+                <button class="link-upload" (click)="openFileSelector()">
+                    clique aqui para selecionar arquivos
+                </button>
+            </p>
+            <p class="msg-drag --small">
+                O documento deve ter no mãximo {{ maxFileSizeMb }}MB e estar no
+                formato {{ allowedFormatsNames }}
+            </p>
+            <p class="msg-drop">Solte o documento</p>
+        </div>
+        <input
+            type="file"
+            aria-hidden="true"
+            tabindex="-1"
+            multiple
+            #inputFile
+            (change)="onChangeInputFile($event)"
+        />
     </div>
-</div>
-
-<input
-    type="file"
-    aria-hidden="true"
-    tabindex="-1"
-    multiple
-    #inputFile
-    (change)="selectedFiles($event.target.files)"
-/>
+</section>
