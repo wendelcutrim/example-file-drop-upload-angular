@@ -14,6 +14,7 @@ export interface ArquivosUpload {
     name: string;
     file: File;
     base64?: string;
+    hexFile?: string;
 }
 
 export interface ArquivosMsgError {
@@ -117,6 +118,7 @@ export class AppComponent implements OnChanges {
                                 name: files[i].name,
                                 file: files[i],
                                 base64: base64,
+                                hexFile: this.convertBase64ToHexa(base64),
                             });
                         }
 
@@ -149,6 +151,20 @@ export class AppComponent implements OnChanges {
         };
 
         return result.asObservable();
+    }
+
+    convertBase64ToHexa(base64: string): string {
+        const base64Str = base64.split(',')[1];
+        // console.log(base64Str);
+
+        const raw = atob(base64Str);
+        let result = '';
+
+        for (let i = 0; i < raw.length; i++) {
+            const hex = raw.charCodeAt(i).toString(16);
+            result += hex.length === 2 ? hex : '0' + hex;
+        }
+        return result.toUpperCase();
     }
 
     verifyFileSizeMb(file: File): boolean {
